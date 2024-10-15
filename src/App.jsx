@@ -1,39 +1,74 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import LoginPage from '@/components/LoginPage';
 import RegisterPage from '@/components/RegisterPage';
 import ForgotPasswordPage from '@/components/ForgotPasswordPage';
+import ProfilePage from '@/components/ProfilePage';
+import SecurityPage from '@/components/settings/SecurityPage';
+import SettingsPage from '@/components/settings/SettingsPage';
+import GeneralPage from '@/components/settings/GeneralPage';
+
+import ProductChanges from '@/components/product/ProductChanges';
+import ProductDetail from '@/components/product/ProductDetail';
+import ProductView from '@/components/product/ProductView';
+
 import HomePage from '@/components/HomePage';
 import AuthContext, { AuthProvider } from '@/context/AuthContext';
 import './index.css';
 
 function App() {
-  const { user } = useContext(AuthContext);
-  const [isLogin, setIsLogin] = useState(true);
-  const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const { user, loading } = useContext(AuthContext); // Adiciona o loading
+
+  // Verifica se está carregando os dados do usuário
+  if (loading) {
+    return <div>Loading...</div>; // Exibe algo enquanto carrega (pode ser um spinner ou qualquer elemento de loading)
+  }
+
+  const ProtectedRoute = ({ element }) => {
+    return user ? element : <Navigate to="/login" replace />;
+  };
+
+  const PublicRoute = ({ element }) => {
+    return !user ? element : <Navigate to="/" replace />;
+  };
 
   return (
-    <div>
-      <ToastContainer />
-      {user ? (
-        <HomePage />
-      ) : isForgotPassword ? (
-        <ForgotPasswordPage setIsLogin={setIsLogin} setIsForgotPassword={setIsForgotPassword} />
-      ) : (
-        isLogin ? (
-          <LoginPage setIsLogin={setIsLogin} setIsForgotPassword={setIsForgotPassword} />
-        ) : (
-          <RegisterPage setIsLogin={setIsLogin} />
-        )
-      )}
-    </div>
+    <Routes>
+      {/* Rotas protegidas */}
+      <Route path="/" element={<ProtectedRoute element={<HomePage />} />} />
+      <Route path="/app" element={<ProtectedRoute element={<HomePage />} />} />
+
+      <Route path="/dashboard" element={<ProtectedRoute element={<HomePage />} />}>
+        <Route path="profile" element={<ProfilePage />} />
+        <Route path="settings" element={<SettingsPage />}>
+          <Route path="general" element={<GeneralPage />} />
+          <Route path="security" element={<SecurityPage />} />
+        </Route>
+        <Route path="products" element={<ProductChanges />}>
+          <Route path="detail" element={<ProductDetail />} />
+          <Route path="view" element={<ProductView />} />
+        </Route>
+      </Route>
+
+      {/* Rotas públicas */}
+      <Route path="/login" element={<PublicRoute element={<LoginPage />} />} />
+      <Route path="/register" element={<PublicRoute element={<RegisterPage />} />} />
+      <Route path="/forgot-password" element={<PublicRoute element={<ForgotPasswordPage />} />} />
+
+      {/* Rota para capturar qualquer rota inválida */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
 
-export default function AppWrapper() {
+export default function RootApp() {
   return (
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <Router>
+      <AuthProvider>
+        <ToastContainer />
+        <App />
+      </AuthProvider>
+    </Router>
   );
 }

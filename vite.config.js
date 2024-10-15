@@ -9,7 +9,7 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'), // Adicionar o alias para "src"
     },
-  
+
   },
   server: {
     proxy: {

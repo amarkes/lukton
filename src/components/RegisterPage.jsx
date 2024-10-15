@@ -3,6 +3,7 @@
 import React, { useState, useContext } from 'react';
 import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
 import AuthContext from '@/context/AuthContext';
+import { Link } from 'react-router-dom';
 
 const RegisterPage = ({ setIsLogin }) => {
   const [email, setEmail] = useState('');
@@ -62,7 +63,8 @@ const RegisterPage = ({ setIsLogin }) => {
           </div>
 
           <div className="text-center text-white mt-4">
-            Já tem uma conta? <button type="button" onClick={() => setIsLogin(true)} className="font-medium text-purple-300 hover:text-purple-400">Entrar</button>
+            Já tem uma conta? <Link to="/login" className="font-medium text-purple-300 hover:text-purple-400">Entrar</Link>
+            {/* <button type="button" onClick={() => setIsLogin(true)} className="font-medium text-purple-300 hover:text-purple-400">Entrar</button> */}
           </div>
         </form>
       </div>

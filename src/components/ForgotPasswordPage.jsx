@@ -3,6 +3,7 @@
 import React, { useState, useContext } from 'react';
 import { FaEnvelope } from 'react-icons/fa';
 import AuthContext from '@/context/AuthContext';
+import { Link } from 'react-router-dom';
 
 const ForgotPasswordPage = ({ setIsLogin, setIsForgotPassword }) => {
   const [email, setEmail] = useState('');
@@ -41,7 +42,8 @@ const ForgotPasswordPage = ({ setIsLogin, setIsForgotPassword }) => {
           </div>
 
           <div className="text-center text-white mt-4">
-            Lembrou sua senha? <button type="button" onClick={() => { setIsForgotPassword(false); setIsLogin(true); }} className="font-medium text-purple-300 hover:text-purple-400">Voltar para Login</button>
+            Lembrou sua senha? <Link to="/login" className="font-medium text-purple-300 hover:text-purple-400">Voltar para Login</Link>
+             {/* <button type="button" onClick={() => { setIsForgotPassword(false); setIsLogin(true); }} className="font-medium text-purple-300 hover:text-purple-400">Voltar para Login</button> */}
           </div>
         </form>
       </div>

@@ -3,10 +3,11 @@
 import React, { useState, useContext } from 'react';
 import { FaUser, FaLock } from 'react-icons/fa';
 import AuthContext from '@/context/AuthContext';
+import { Link } from 'react-router-dom';
 
-const LoginPage = ({ setIsLogin, setIsForgotPassword }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const LoginPage = () => {
+  const [email, setEmail] = useState('teste8@teste.com');
+  const [password, setPassword] = useState('teste');
   const { login } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
@@ -43,9 +44,10 @@ const LoginPage = ({ setIsLogin, setIsForgotPassword }) => {
 
           <div className="flex items-center justify-between text-white text-sm">
             <div>
-              <a href="#" onClick={() => setIsForgotPassword(true)} className="font-medium hover:underline">
+            <Link to="/forgot-password" className="font-medium hover:underline">Esqueceu a senha?</Link>
+              {/* <a href="#" onClick={() => setIsForgotPassword(true)} className="font-medium hover:underline">
                 Esqueceu a senha?
-              </a>
+              </a> */}
             </div>
           </div>
 
@@ -56,7 +58,8 @@ const LoginPage = ({ setIsLogin, setIsForgotPassword }) => {
           </div>
 
           <div className="text-center text-white mt-4">
-            Não tem uma conta? <button type="button" onClick={() => setIsLogin(false)} className="font-medium text-purple-300 hover:text-purple-400">Registre-se</button>
+            Não tem uma conta? <Link to="/register" className="font-medium text-purple-300 hover:text-purple-400">Registre-se</Link>
+            {/* <button type="button" onClick={() => setIsLogin(false)} className="font-medium text-purple-300 hover:text-purple-400">Registre-se</button> */}
           </div>
         </form>
       </div>
