@@ -4,6 +4,7 @@ import AuthContext from '@/context/AuthContext';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import Sidebar from '@/components/sidebar/Sidebar';
+import ThemeSwitcher from '@/components/theme/theme'
 
 // Função para mapear a primeira letra para uma cor
 const getAvatarBackgroundColor = (initial) => {
@@ -32,13 +33,14 @@ const HomePage = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className="min-h-screen bg-gray-100 dark:bg-slate-900 flex flex-col">
       {/* Header */}
-      <header className="bg-white shadow p-4 flex justify-between items-center">
-        <div className="text-2xl font-bold text-gray-900">Meu Dashboard</div>
+      <header className="bg-white dark:bg-slate-900 shadow dark:shadow-white p-4 flex justify-between items-center">
+        <div className="text-2xl font-bold text-gray-900 dark:text-gray-400" >Meu Dashboard</div>
 
         {/* Avatar e Menu de Usuário */}
         <div className="relative">
+          <ThemeSwitcher />
           <DropdownMenu>
             <DropdownMenuTrigger className="focus:outline-none">
               <Avatar className={avatarBgColor}>
@@ -50,19 +52,19 @@ const HomePage = () => {
               </Avatar>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent className="mt-2 bg-white shadow-lg border rounded-md">
+            <DropdownMenuContent className="mt-2 bg-white dark:bg-slate-900 shadow-lg border rounded-md">
               <DropdownMenuItem asChild>
-                <NavLink to="/dashboard/profile" className="block px-4 py-2 text-sm text-gray-700">
+                <NavLink to="/dashboard/profile" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-400">
                   Perfil
                 </NavLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <NavLink to="/dashboard/settings" className="block px-4 py-2 text-sm text-gray-700">
+                <NavLink to="/dashboard/settings" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-400">
                   Configurações
                 </NavLink>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <button onClick={logout} className="block px-4 py-2 text-sm text-gray-700">
+                <button onClick={logout} className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-400">
                   Logout
                 </button>
               </DropdownMenuItem>
@@ -77,7 +79,7 @@ const HomePage = () => {
 
         {/* Main content */}
         <div className="flex-1 p-10">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-400 mb-6">
             Bem-vindo ao Dashboard, {user?.firstName}!
           </h1>
           <Outlet /> {/* Outlet renderiza as páginas internas */}

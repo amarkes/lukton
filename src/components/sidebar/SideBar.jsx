@@ -96,7 +96,7 @@ const DashboardMenu = () => {
   };
 
   return (
-    <aside className="w-64 bg-white text-gray-600 flex flex-col">
+    <aside className="border-r dark:border-gray-100 w-64 bg-white dark:bg-slate-900 text-gray-600 dark:text-gray-400 flex flex-col">
       <div className="px-6 py-4">
         <div className="text-2xl font-bold">Dashboard</div>
       </div>
@@ -107,7 +107,7 @@ const DashboardMenu = () => {
               {menuItem.subMenu ? (
                 <div>
                   <button
-                    className={`${isSubMenuActive(menuItem.subMenu) ? 'bg-gray-100 text-gray-900' : ''} flex justify-between items-center block py-2.5 px-4 rounded-md w-full text-left transition-all hover:bg-gray-100`}
+                    className={`${isSubMenuActive(menuItem.subMenu) ? 'bg-gray-100 dark:bg-gray-600 text-gray-900 dark:text-gray-300' : ''} flex justify-between items-center block py-2.5 px-4 rounded-md w-full text-left transition-all hover:bg-gray-100`}
                     onClick={() => toggleSubMenu(index)}
                   >
                     <span className="flex gap-2 items-center">
@@ -131,8 +131,8 @@ const DashboardMenu = () => {
                             to={subItem.route}
                             className={({ isActive }) =>
                               isActive
-                                ? 'flex gap-2 items-center block py-2.5 px-4 rounded-md bg-gray-200 text-gray-900'
-                                : 'flex gap-2 items-center block py-2.5 px-4 rounded-md hover:bg-gray-100'
+                                ? 'flex gap-2 items-center block py-2.5 px-4 rounded-md bg-gray-200 text-gray-900 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-300'
+                                : 'flex gap-2 items-center block py-2.5 px-4 rounded-md hover:bg-gray-100 dark:hover:bg-gray-500 dark:text-gray-400 dark:hover:text-gray-200'
                             }
                             onClick={(e) => e.stopPropagation()}
                             replace
@@ -150,7 +150,7 @@ const DashboardMenu = () => {
                   to={menuItem.route}
                   className={({ isActive }) =>
                     isActive
-                      ? 'flex gap-2 justify-start items-center block py-2.5 px-4 rounded-md bg-gray-200 text-gray-900'
+                      ? 'flex gap-2 justify-start items-center block py-2.5 px-4 rounded-md bg-gray-200 text-gray-900 dark:text-gray-400'
                       : 'flex gap-2 justify-start items-center block py-2.5 px-4 rounded-md hover:bg-gray-100'
                   }
                   replace

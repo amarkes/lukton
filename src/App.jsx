@@ -1,19 +1,19 @@
 import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import LoginPage from '@/components/LoginPage';
-import RegisterPage from '@/components/RegisterPage';
-import ForgotPasswordPage from '@/components/ForgotPasswordPage';
-import ProfilePage from '@/components/ProfilePage';
-import SecurityPage from '@/components/settings/SecurityPage';
-import SettingsPage from '@/components/settings/SettingsPage';
-import GeneralPage from '@/components/settings/GeneralPage';
+import LoginPage from '@/pages/LoginPage';
+import RegisterPage from '@/pages/RegisterPage';
+import ForgotPasswordPage from '@/pages/ForgotPasswordPage';
+import ProfilePage from '@/pages/ProfilePage';
+import SecurityPage from '@/pages/settings/SecurityPage';
+import SettingsPage from '@/pages/settings/SettingsPage';
+import GeneralPage from '@/pages/settings/GeneralPage';
 
-import ProductChanges from '@/components/product/ProductChanges';
-import ProductDetail from '@/components/product/ProductDetail';
-import ProductView from '@/components/product/ProductView';
+import ProductChanges from '@/pages/product/ProductChanges';
+import ProductDetail from '@/pages/product/ProductDetail';
+import ProductView from '@/pages/product/ProductView';
 
-import HomePage from '@/components/HomePage';
+import HomePage from '@/pages/HomePage';
 import AuthContext, { AuthProvider } from '@/context/AuthContext';
 import './index.css';
 
