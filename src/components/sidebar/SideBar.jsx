@@ -18,39 +18,45 @@ const menu = [
     route: '/dashboard/profile'
   },
   {
-    name: 'Settings',
-    icon: <CiSettings />,
-    route: '',
-    subMenu: [
-      {
-        name: 'General',
-        icon: <CgProfile />,
-        route: '/dashboard/settings/general'
-      },
-      {
-        name: 'Security',
-        icon: <CgProfile />,
-        route: '/dashboard/settings/security'
-      }
-    ]
+    name: 'Users',
+    icon: <CgProfile />,
+    route: '/dashboard/users/list'
   },
-  {
-    name: 'Products',
-    icon: <FaProductHunt />,
-    route: '',
-    subMenu: [
-      {
-        name: 'Detail',
-        icon: <FaProductHunt />,
-        route: '/dashboard/products/detail'
-      },
-      {
-        name: 'View',
-        icon: <FaProductHunt />,
-        route: '/dashboard/products/view'
-      }
-    ]
-  }
+ 
+  // {
+  //   name: 'Settings',
+  //   icon: <CiSettings />,
+  //   route: '',
+  //   subMenu: [
+  //     {
+  //       name: 'General',
+  //       icon: <CgProfile />,
+  //       route: '/dashboard/settings/general'
+  //     },
+  //     {
+  //       name: 'Security',
+  //       icon: <CgProfile />,
+  //       route: '/dashboard/settings/security'
+  //     }
+  //   ]
+  // },
+  // {
+  //   name: 'Products',
+  //   icon: <FaProductHunt />,
+  //   route: '',
+  //   subMenu: [
+  //     {
+  //       name: 'Detail',
+  //       icon: <FaProductHunt />,
+  //       route: '/dashboard/products/detail'
+  //     },
+  //     {
+  //       name: 'View',
+  //       icon: <FaProductHunt />,
+  //       route: '/dashboard/products/view'
+  //     }
+  //   ]
+  // }
 ];
 
 const DashboardMenu = () => {
@@ -96,7 +102,7 @@ const DashboardMenu = () => {
   };
 
   return (
-    <aside className="border-r dark:border-gray-100 w-64 bg-white dark:bg-slate-900 text-gray-600 dark:text-gray-400 flex flex-col">
+    <aside className="h-full w-64 bg-white dark:bg-slate-900 text-gray-600 dark:text-gray-400 flex flex-col">
       <div className="px-6 py-4">
         <div className="text-2xl font-bold">Dashboard</div>
       </div>

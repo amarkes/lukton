@@ -1,10 +1,12 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import AuthContext from '@/context/AuthContext';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import Sidebar from '@/components/sidebar/Sidebar';
-import ThemeSwitcher from '@/components/theme/theme'
+import ThemeSwitcher from '@/components/theme/theme';
+import { useState } from 'react';
+import { HiMenu } from 'react-icons/hi';
 
 // Função para mapear a primeira letra para uma cor
 const getAvatarBackgroundColor = (initial) => {
@@ -27,19 +29,22 @@ const HomePage = () => {
   const { user, logout } = useContext(AuthContext);
   const initials = getInitials(user);
   const avatarBgColor = getAvatarBackgroundColor(initials.charAt(0));
-
-  useEffect(() => {
-    console.log(new Date())
-  });
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-slate-900 flex flex-col">
       {/* Header */}
       <header className="bg-white dark:bg-slate-900 shadow dark:shadow-white p-4 flex justify-between items-center">
-        <div className="text-2xl font-bold text-gray-900 dark:text-gray-400" >Meu Dashboard</div>
+        <button
+          className="lg:hidden text-gray-900 dark:text-gray-400 focus:outline-none mr-4"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+        >
+          <HiMenu size={24} />
+        </button>
+        <div className="text-2xl font-bold text-gray-900 dark:text-gray-400">LUKTON</div>
 
         {/* Avatar e Menu de Usuário */}
-        <div className="relative">
+        <div className="relative flex items-center gap-4">
           <ThemeSwitcher />
           <DropdownMenu>
             <DropdownMenuTrigger className="focus:outline-none">
@@ -75,10 +80,12 @@ const HomePage = () => {
 
       <div className="flex flex-1">
         {/* Sidebar */}
-        <Sidebar />
+        <div className={`lg:block ${sidebarOpen ? 'block' : 'hidden'} lg:w-64 w-full fixed lg:relative z-50`}>
+          <Sidebar />
+        </div>
 
         {/* Main content */}
-        <div className="flex-1 p-10">
+        <div className="flex-1 p-4 dark:bg-gray-950 ml-0 transition-all duration-300 ease-in-out">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-400 mb-6">
             Bem-vindo ao Dashboard, {user?.firstName}!
           </h1>

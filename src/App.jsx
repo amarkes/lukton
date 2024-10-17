@@ -13,6 +13,10 @@ import ProductChanges from '@/pages/product/ProductChanges';
 import ProductDetail from '@/pages/product/ProductDetail';
 import ProductView from '@/pages/product/ProductView';
 
+import UsersDetailPage from '@/pages/users/detail';
+import UsersListPage from '@/pages/users/list';
+import UsersPage from '@/pages/users/page';
+
 import HomePage from '@/pages/HomePage';
 import AuthContext, { AuthProvider } from '@/context/AuthContext';
 import './index.css';
@@ -40,6 +44,12 @@ function App() {
       <Route path="/app" element={<ProtectedRoute element={<HomePage />} />} />
 
       <Route path="/dashboard" element={<ProtectedRoute element={<HomePage />} />}>
+
+        <Route path="users" element={<UsersPage />}>
+          <Route path="detail" element={<UsersDetailPage />} />
+          <Route path="list" element={<UsersListPage />} />
+        </Route>
+
         <Route path="profile" element={<ProfilePage />} />
         <Route path="settings" element={<SettingsPage />}>
           <Route path="general" element={<GeneralPage />} />
