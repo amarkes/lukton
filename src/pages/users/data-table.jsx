@@ -46,16 +46,7 @@ import {
     DoubleArrowRightIcon,
 } from "@radix-ui/react-icons";
 
-
-
-const data = Array(115).fill().map((_, index) => ({
-    id: index + 1,
-    amount: index + 1,
-    status: "pending",
-    email: `${index}-email@email.com`
-}));
-
-export default function DataTableDefault() {
+export default function DataTableDefault({data}) {
     const [sorting, setSorting] = React.useState([])
     const [columnFilters, setColumnFilters] = React.useState(
         []

@@ -42,10 +42,10 @@ export const columns = [
         enableHiding: false,
     },
     {
-        accessorKey: "status",
-        header: "Status",
+        accessorKey: "applicableTo",
+        header: "Aplicavel para",
         cell: ({ row }) => (
-            <div className="capitalize">{row.getValue("status")}</div>
+            <div className="capitalize">{row.getValue("applicableTo")}</div>
         ),
     },
     {

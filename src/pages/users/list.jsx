@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
-import { columns } from "./columns";
 import DataTableDefault from "./data-table";
+import UsersServices from "@/services/discounts/index"
 
 async function getData() {
+  const params = {
+    useCache: false,
+  }
+  return UsersServices.getAll(params);
   // Fetch data from your API here.
-  return Array(115).fill().map((_, index) => ({
-    id: index + 1,
-    nome: `Pessoa ${index + 1}`,
-    status: 'pending',
-    email: `${index}-email@gmail.com`
-  }));;
+  // return Array(350).fill().map((_, index) => ({
+  //   id: index + 1,
+  //   amount: index + 1,
+  //   status: 'pending',
+  //   email: `${index}-email@gmail.com`
+  // }));;
 }
 
 export default function ListUsersPage() {
@@ -17,15 +21,23 @@ export default function ListUsersPage() {
 
   useEffect(() => {
     async function fetchData() {
+      const arr = [];
       const result = await getData();
-      setData(result);
+      result.getAllPages(res => {
+        arr.push(...res.data.results);
+        if (!result?.hasNextPage()) {
+          console.log(arr)
+          setData(arr);
+        }
+
+      });
     }
     fetchData();
   }, []);
 
   return (
     <div className="container mx-auto py-10">
-      <DataTableDefault columns={columns} data={data} />
+      <DataTableDefault data={data} />
     </div>
   );
 }
