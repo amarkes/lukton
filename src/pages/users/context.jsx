@@ -1,30 +1,42 @@
 import React, { createContext, useState, useEffect } from 'react';
-import api from '../common/utils/axios';
+import api from '@/common/utils/axios';
 import { toast } from 'react-toastify';
 import store from 'store';
 import { useNavigate } from 'react-router-dom';
 import Model from './model';
+import Paginator from '@/common/services/paginator';
 
-const UsersContext = createContext();
 
-export const UsersProvider = ({ children }) => {
-    const [users, setUsers] = useState(null);
+const ServicesContext = createContext();
+
+export const ServicesProvider = ({ children }) => {
+    const [list, setList] = useState([]);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const get = (id) => {
+    const get = async (id) => {
+        if (!id) {
+            toast.error('ID é obrigatório.');
+            return null;
+        }
         try {
-            return api.get(`${Model.api}/?${id}`);
+            return await api.get(`${Model.api}/${id}`);
         } catch (error) {
-            toast.error(error);
-            return;
+            toast.error(error.message);
+            return null;
         }
     }
+    
 
-    const getAll = (filters) => {
+    const getAll = (config) => {
         try {
-            const params = new URLSearchParams(filters).toString();
-            return api.get(`${Model.api}?${params}`);
+            config = config || {};
+            return new Paginator({
+                url: `${Model.api}`,
+                config: config,
+                useCache:  typeof config.useCache === 'boolean' ? config.useCache : true,
+            });
+
         } catch (error) {
             toast.error(error);
             return;
@@ -32,10 +44,10 @@ export const UsersProvider = ({ children }) => {
     };
 
     return (
-        <UsersContext.Provider value={{ users, setUsers, loading, setLoading, get, getAll }}>
+        <ServicesContext.Provider value={{ list, setList, loading, setLoading, get, getAll }}>
             {children}
-        </UsersContext.Provider>
+        </ServicesContext.Provider>
     );
 };
 
-export default UsersContext;
+export default ServicesContext;

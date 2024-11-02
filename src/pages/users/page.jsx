@@ -1,12 +1,15 @@
 import { Outlet } from 'react-router-dom';
+import { ServicesProvider } from './context';
 
 import React from 'react';
 
-const UsersPage = () => {
+const ModelPage = () => {
   return (
-    <Outlet />
+    <ServicesProvider>
+      <Outlet />
+    </ServicesProvider>
   );
 };
 
 
-export default UsersPage;
+export default ModelPage;

@@ -45,6 +45,7 @@ import {
     DoubleArrowLeftIcon,
     DoubleArrowRightIcon,
 } from "@radix-ui/react-icons";
+import Model from './model';
 
 export default function DataTableDefault({data}) {
     const [sorting, setSorting] = React.useState([])
@@ -77,14 +78,20 @@ export default function DataTableDefault({data}) {
     return (
         <div className="w-full">
             <div className="flex items-center py-4">
-                <Input
-                    placeholder="Filter emails..."
-                    value={(table.getColumn("email")?.getFilterValue()) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn("email")?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm"
-                />
+                <div className="flex items-center gap-2 w-full mr-2">
+                    {Model.filters?.map((res, index) => {
+                        return <Input
+                        key={index}
+                        placeholder={`Filtrar por ${res?.name}`}
+                        value={(table.getColumn(res?.input)?.getFilterValue()) ?? ""}
+                        onChange={(event) =>
+                            table.getColumn(res?.input)?.setFilterValue(`${event.target.value}`)
+                        }
+                        className="max-w-sm"
+                    />
+                    })}
+                </div>
+                
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-auto">
