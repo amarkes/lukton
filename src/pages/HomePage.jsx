@@ -32,9 +32,9 @@ const HomePage = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-slate-900 flex flex-col">
+    <div className="min-h-screen bg-gray-100 dark:bg-zinc-900 flex flex-col">
       {/* Header */}
-      <header className="bg-white dark:bg-slate-900 shadow dark:shadow-white p-4 flex justify-between items-center">
+      <header className="bg-white dark:bg-zinc-900 shadow dark:shadow-white p-4 flex justify-between items-center dark:border-4 dark:border-b-indigo-500  border-4 border-b-indigo-500">
         <button
           className="lg:hidden text-gray-900 dark:text-gray-400 focus:outline-none mr-4"
           onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -57,7 +57,7 @@ const HomePage = () => {
               </Avatar>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent className="mt-2 bg-white dark:bg-slate-900 shadow-lg border rounded-md">
+            <DropdownMenuContent className="mt-2 bg-white darkbg-zinc-900 shadow-lg border rounded-md">
               <DropdownMenuItem asChild>
                 <NavLink to="/dashboard/profile" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-400">
                   Perfil
@@ -85,11 +85,13 @@ const HomePage = () => {
         </div>
 
         {/* Main content */}
-        <div className="flex-1 p-4 dark:bg-gray-950 ml-0 transition-all duration-300 ease-in-out">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-400 mb-6">
-            Bem-vindo ao Dashboard, {user?.firstName}!
-          </h1>
-          <Outlet /> {/* Outlet renderiza as páginas internas */}
+        <div className="flex-1 p-4 dark:bg-black ml-0 transition-all duration-300 ease-in-out">
+          <div className='bg-white p-4 rounded-xl dark:bg-zinc-900'>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-200 mb-6">
+              Bem-vindo ao Dashboard, {user?.firstName}!
+            </h1>
+            <Outlet /> {/* Outlet renderiza as páginas internas */}
+          </div>
         </div>
       </div>
     </div>
