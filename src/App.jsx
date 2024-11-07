@@ -19,6 +19,7 @@ import UsersPage from '@/pages/users/page';
 
 import HomePage from '@/pages/HomePage';
 import AuthContext, { AuthProvider } from '@/context/AuthContext';
+import { AlertDialogProvider } from '@/components/alert/AlertDialogContext';
 import './index.css';
 
 function App() {
@@ -76,8 +77,10 @@ export default function RootApp() {
   return (
     <Router>
       <AuthProvider>
-        <ToastContainer />
-        <App />
+        <AlertDialogProvider>
+          <ToastContainer />
+          <App />
+        </AlertDialogProvider>,
       </AuthProvider>
     </Router>
   );

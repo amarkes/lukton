@@ -7,6 +7,7 @@ import Model from './model';
 import Paginator from '@/common/services/paginator';
 
 
+
 const ServicesContext = createContext();
 
 export const ServicesProvider = ({ children }) => {
@@ -26,7 +27,7 @@ export const ServicesProvider = ({ children }) => {
             return null;
         }
     }
-    
+
 
     const getAll = (config) => {
         try {
@@ -34,7 +35,7 @@ export const ServicesProvider = ({ children }) => {
             return new Paginator({
                 url: `${Model.api}`,
                 config: config,
-                useCache:  typeof config.useCache === 'boolean' ? config.useCache : true,
+                useCache: typeof config.useCache === 'boolean' ? config.useCache : true,
             });
 
         } catch (error) {
@@ -43,8 +44,25 @@ export const ServicesProvider = ({ children }) => {
         }
     };
 
+    const postServices = (data, config) => {
+        return api.post(`${Model.apiAdd}`, data, config);
+    };
+
+
+    const putServices = (id, data, config) => {
+        return api.put(`${Model.api}/${id}/`, data, config);
+    };
+
+    const patchServices = (id, data, config) => {
+        return api.patch(`${Model.api}/${id}`, data, config);
+    };
+
+    const deleteServices = (id, config) => {
+        return api.delete(`${Model.api}/${id}`, config);
+    };
+
     return (
-        <ServicesContext.Provider value={{ list, setList, loading, setLoading, get, getAll }}>
+        <ServicesContext.Provider value={{ list, setList, loading, setLoading, get, getAll, postServices, putServices, patchServices, deleteServices }}>
             {children}
         </ServicesContext.Provider>
     );

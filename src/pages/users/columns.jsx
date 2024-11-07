@@ -1,6 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client"
 
-import * as React from "react";
 import {
     CaretSortIcon,
     DotsHorizontalIcon,
@@ -17,9 +17,11 @@ import {
     DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu";
 import Model from './model';
-import { createColumnHelper, filterFns } from "@tanstack/react-table";
+import ServiceContext from './context';
+import { useAlertDialog } from '@/components/alert/AlertDialogContext';
+import { useContext } from "react";
 
-const columnHelper = createColumnHelper();
+
 
 const _setCheckboxHeader = table => {
     return <Checkbox
@@ -67,27 +69,57 @@ const _currencyCell = (row, value, formated = 'pt-BR', currency = 'BRL') => {
 
 const _actionsCell = row => {
     const payment = row.original
+    const { showAlert } = useAlertDialog();
+    const { deleteServices, getAll, setList } = useContext(ServiceContext);
+
+    const fetchData = async () => {
+        const params = {
+            useCache: false,
+          }
+        const arr = [];
+        const result = await getAll(params);;
+        result.getAllPages(res => {
+          arr.push(...res.data.results);
+          if (!result?.hasNextPage()) {
+            setList(arr);
+          }
+  
+        });
+      }
+
+    const _handleDelete = () => {
+        showAlert(`Tem certeza que deseja deletar o item ${payment.id}?`, async () => {
+            await deleteServices(payment.id);
+            await fetchData();
+        });
+    }
+
 
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-8 w-8 p-0">
-                    <span className="sr-only">Open menu</span>
-                    <DotsHorizontalIcon className="h-4 w-4" />
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem
-                    onClick={() => navigator.clipboard.writeText(payment.id)}
-                >
-                    Copy ID
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>View </DropdownMenuItem>
-                <DropdownMenuItem>View payment details</DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
+        <>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="h-8 w-8 p-0">
+                        <span className="sr-only">Open menu</span>
+                        <DotsHorizontalIcon className="h-4 w-4" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                    <DropdownMenuItem
+                        onClick={() => navigator.clipboard.writeText(payment.id)}
+                    >
+                        Copy ID
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>View </DropdownMenuItem>
+                    <DropdownMenuItem>View payment details</DropdownMenuItem>
+                    <DropdownMenuItem
+                        onClick={() => _handleDelete()}
+                    >Delete</DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+        </>
     )
 }
 
@@ -139,8 +171,8 @@ const caseInsensitiveFilter = (row, columnId, filterValue) => {
     return normalizedCellValue.includes(normalizedFilterValue);
 };
 
-
-export const columns = Model?.schema.map((col) => {
+const schemeFiltered = Model?.schema.filter(fill => !fill?.hiddenInTable)
+export const columns = schemeFiltered.map((col) => {
     switch (col.type) {
         case "checkbox":
             return {

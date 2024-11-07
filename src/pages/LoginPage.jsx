@@ -6,8 +6,8 @@ import AuthContext from '@/context/AuthContext';
 import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('teste8@teste.com');
-  const [password, setPassword] = useState('teste');
+  const [email, setEmail] = useState('teste@teste.com');
+  const [password, setPassword] = useState('teste2');
   const { login } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
